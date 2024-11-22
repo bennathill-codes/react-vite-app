@@ -1,18 +1,20 @@
-import connectToServer from "./connect.js";
+import { connectToServer } from "./connect.js";
 import express from "express";
 import cors from "cors";
+import users from "./userRoutes.js";
 
 const app = express();
 const PORT = 3000;
 
-app.use(express.json());
 app.use(
   cors({
     credentials: true,
-    origin: "http://localhost:3000",
+    origin: "http://localhost:" + PORT,
   })
 );
+app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(users);
 
 app.listen(PORT, () => {
   connectToServer();
