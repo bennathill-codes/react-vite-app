@@ -1,10 +1,10 @@
 import express from "express";
-import { getDatabase } from "./connect";
+import { getDatabase } from "./connect.js";
 import { ObjectId } from "mongodb";
 
 let userRoutes = express.Router();
 
-// get all
+// get all users
 userRoutes.route("/users").get(async (req, res) => {
   let db = getDatabase();
 
