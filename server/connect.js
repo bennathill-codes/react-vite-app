@@ -4,6 +4,8 @@ import dotenv from "dotenv";
 dotenv.config();
 const { connect, connection } = mongoose;
 
+let isConnected = false;
+
 const connectToServer = async () => {
   const uri = process.env.ATLAS_URI;
 
@@ -18,14 +20,24 @@ const connectToServer = async () => {
       serverSelectionTimeoutMS: 5000, // timeout if server not found
     });
 
+    isConnected = true;
     console.log("Connected to MongoDB");
   } catch (err) {
     console.error("Error connecting to MongoDB:", err.message);
   }
 };
 
+// get database instance
+const getDatabase = () => {
+  if (!isConnected) {
+    throw new Error("Currently disconnected from the database");
+  }
+  return mongoose.connection.db;
+};
+
 // listen for db events
 connection.on("disconnected", () => {
+  isConnected = false;
   console.log("MongoDB disconnected");
 });
 
@@ -40,4 +52,4 @@ process.on("SIGINT", async () => {
   process.exit(0);
 });
 
-export default connectToServer;
+export { connectToServer, getDatabase };
