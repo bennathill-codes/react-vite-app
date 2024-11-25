@@ -61,7 +61,7 @@ userRoutes.route("/users/:id").put(async (req, res) => {
 });
 
 // delete user
-userRoutes.route("/users/:id").get(async (req, res) => {
+userRoutes.route("/users/:id").delete(async (req, res) => {
   let db = getDatabase();
 
   let data = await db
