@@ -1,6 +1,11 @@
-import axios from 'axios'; 
-import { useState, useEffect } from 'react';
-import { getUsers, createUser } from './api'
+import axios from 'axios';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+import Login from '../pages/Login';
+import Register from '../pages/Register';
+import Home from '../pages/Home';
+import Search from '../pages/Search';
+import About from '../pages/About';
+import Profile from '../pages/Profile';
 import './App.css'
 
 axios.defaults.baseURL = "http://localhost:3000";
@@ -8,33 +13,17 @@ axios.defaults.withCredentials = true;
 
 function App() {
 
-  const [users, setUsers] = useState();
-
-  useEffect(() => {
-    async function loadAllUsers() {
-      const data = await getUsers();
-
-      if (data) {
-        setUsers(data);
-      }
-    }
-    loadAllUsers();
-  }, [])
-
-  function createNewUser() {
-    const userObject = {
-      email: "test3@test.com",
-      password: "testaccount",
-    }
-    createUser(userObject);
-  }
-
   return (
-    <>
-      {/* test api on frontend */}
-      <button onClick={(createNewUser)}>create user</button>
-      {JSON.stringify(users)}
-    </>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/search" element={<Search />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/profile" element={<Profile />} />
+      </Routes>
+    </Router>
   )
 }
 
