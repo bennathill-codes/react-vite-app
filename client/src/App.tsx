@@ -26,7 +26,6 @@ function App() {
       email: "test3@test.com",
       password: "testaccount",
     }
-
     createUser(userObject);
   }
 
